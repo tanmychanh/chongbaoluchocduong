@@ -152,6 +152,27 @@
       fileName.textContent = "Chưa chọn ảnh";
     });
   </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } 
+      from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+    // Cấu hình Firebase của bạn
+    const firebaseConfig = {
+      apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
+      authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
+      projectId: "phongchongbaoluchocduong-35b56",
+      storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
+      messagingSenderId: "1053273947422",
+      appId: "1:1053273947422:web:7560d276444ce91c109d0f",
+      measurementId: "G-4TYSZTTMS1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  <script>
+
 
 </body>
 </html>
+
