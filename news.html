@@ -2,175 +2,171 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Tin tức</title>
+  <title>Tin tức - Phòng chống bạo lực học đường</title>
   <style>
-    body {margin:0;font-family:'Segoe UI',sans-serif;background:#f9f9f9;color:#333;}
-    header {background:#c0392b;color:white;text-align:center;padding:30px 20px;}
-    nav {background:#fff;padding:10px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-    nav a {margin:0 15px;text-decoration:none;color:#c0392b;font-weight:bold;}
-    .news-container {max-width:800px;margin:40px auto;padding:20px;background:#fff;
-                     border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);}
-    .news-container h2 {color:#c0392b;text-align:center;margin-bottom:20px;}
-    .article {border-bottom:1px solid #ddd;padding:15px 0;}
-    .article h3 {margin:0;color:#c0392b;}
-    .article p {margin:5px 0;line-height:1.6;}
-    .article img {max-width:100%;margin-top:10px;border-radius:8px;}
-    .add-news {margin-top:30px;display:none;}
-    .add-news input, .add-news textarea {width:100%;padding:10px;margin-bottom:15px;
-      border:1px solid #ccc;border-radius:6px;font-size:16px;}
-    .custom-file {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 15px;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
     }
-    .custom-file input[type="file"] {
-      display: none; /* Ẩn input gốc */
-    }
-    .custom-file label {
-      display: block;
+    header {
       background-color: #c0392b;
       color: white;
-      padding: 12px;
-      border-radius: 6px;
+      padding: 20px;
       text-align: center;
-      cursor: pointer;
-      font-size: 16px;
     }
-    .custom-file label:hover {
+    .content {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      color: #c0392b;
+    }
+    form {
+      margin-top: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #c0392b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
       background-color: #e74c3c;
     }
-    .file-name {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #555;
-      text-align: center;
+    .article {
+      background: #fff;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-    .add-news button {background:#c0392b;color:white;border:none;padding:12px 20px;
-      border-radius:6px;cursor:pointer;font-size:16px;}
-    .add-news button:hover {background:#e74c3c;}
-    footer {background:#c0392b;color:white;text-align:center;padding:20px;margin-top:40px;}
-    .login-box {text-align:center;margin-bottom:20px;}
-    .login-box input {padding:8px;border:1px solid #ccc;border-radius:6px;}
-    .login-box button {padding:8px 15px;background:#c0392b;color:white;border:none;
-      border-radius:6px;cursor:pointer;}
+    .article img {
+      max-width: 600px;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>🎓 Chuyên đề giáo dục</h1>
-    <p>Trang tin tức học đường an toàn và thân thiện</p>
-  </header>
+<header>
+  <h1>Tin tức chuyên đề</h1>
+  <p>Phòng chống bạo lực học đường</p>
+</header>
 
-  <nav>
-    <a href="index.html">Trang chủ</a>
-    <a href="news.html">Tin tức</a>
-    <a href="gt.html">Thông tin</a>
-    <a href="trochoi.html">Trò chơi</a>
-    <a href="gopy.html">Góp ý</a>
-  </nav>
+<div class="content">
+  <h2>📰 Đăng bài mới</h2>
+  <form id="newsForm">
+    <input type="text" id="title" placeholder="Tiêu đề bài viết" required>
+    <textarea id="content" rows="5" placeholder="Nội dung bài viết" required></textarea>
+    <input type="file" id="imageInput" accept="image/*">
+    <button type="submit">Đăng bài</button>
+  </form>
 
-  <div class="news-container">
-    <h2>📰 Tin tức mới nhất</h2>
+  <h2>📌 Danh sách bài viết</h2>
+  <div id="articles"></div>
+</div>
 
-    <div id="articles"></div>
+<!-- Firebase SDK -->
+<script type="module">
+  // Import Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-    <!-- Đăng nhập admin -->
-    <div class="login-box">
-      <input type="password" id="adminPass" placeholder="Nhập mật khẩu admin">
-      <button onclick="checkAdmin()">Đăng nhập</button>
-    </div>
+  // Cấu hình Firebase của bạn
+  const firebaseConfig = {
+    apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
+    authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
+    projectId: "phongchongbaoluchocduong-35b56",
+    storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
+    messagingSenderId: "1053273947422",
+    appId: "1:1053273947422:web:7560d276444ce91c109d0f",
+    measurementId: "G-4TYSZTTMS1"
+  };
 
-    <!-- Form thêm bài viết -->
-    <div class="add-news" id="addNewsForm">
-      <h2>✍️ Đăng bài mới</h2>
-      <form id="newsForm">
-        <input type="text" name="title" placeholder="Tiêu đề bài viết" required>
-        <textarea name="content" rows="5" placeholder="Nội dung bài viết" required></textarea>
-        
-        <!-- Ô chọn ảnh đẹp -->
-        <div class="custom-file">
-          <input type="file" id="imageInput" name="image" accept="image/*">
-          <label for="imageInput">📷 Chọn hình ảnh</label>
-          <div class="file-name" id="fileName">Chưa chọn ảnh</div>
-        </div>
+  // Khởi tạo Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        <button type="submit">Đăng bài</button>
-      </form>
-    </div>
-  </div>
+  // Xử lý form đăng bài
+  const form = document.getElementById("newsForm");
+  const articlesDiv = document.getElementById("articles");
+  const fileInput = document.getElementById("imageInput");
 
-  <footer>
-    &copy; 2025 Trường Tân Mỹ Chánh. Chung tay vì học đường an toàn.
-  </footer>
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+    const imageFile = fileInput.files[0];
 
-  <script>
-    const form = document.getElementById('newsForm');
-    const articlesDiv = document.getElementById('articles');
-    const addNewsForm = document.getElementById('addNewsForm');
-    const fileInput = document.getElementById('imageInput');
-    const fileName = document.getElementById('fileName');
-
-    function checkAdmin() {
-      const pass = document.getElementById('adminPass').value;
-      if (pass === "15022011") {
-        addNewsForm.style.display = "block";
-        document.querySelector('.login-box').style.display = "none";
-      } else {
-        alert("Sai mật khẩu!");
-      }
-    }
-
-    // Hiển thị tên file ảnh
-    fileInput.addEventListener('change', () => {
-      fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : "Chưa chọn ảnh";
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = form.title.value;
-      const content = form.content.value;
-      const imageFile = fileInput.files[0];
-
-      const article = document.createElement('div');
-      article.classList.add('article');
-      article.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
-
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          article.appendChild(img);
-        };
-        reader.readAsDataURL(imageFile);
-      }
-
-      articlesDiv.prepend(article);
+    let imageData = null;
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        imageData = e.target.result;
+        await addDoc(collection(db, "articles"), {
+          title,
+          content,
+          image: imageData,
+          createdAt: new Date()
+        });
+        form.reset();
+        loadArticles();
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      await addDoc(collection(db, "articles"), {
+        title,
+        content,
+        image: null,
+        createdAt: new Date()
+      });
       form.reset();
-      fileName.textContent = "Chưa chọn ảnh";
+      loadArticles();
+    }
+  });
+
+  // Hàm hiển thị bài viết
+  async function loadArticles() {
+    articlesDiv.innerHTML = "";
+    const q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement("div");
+      div.classList.add("article");
+      div.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p>`;
+      if (data.image) {
+        const img = document.createElement("img");
+        img.src = data.image;
+        div.appendChild(img);
+      }
+      articlesDiv.appendChild(div);
     });
-  </script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
-      authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
-      projectId: "phongchongbaoluchocduong-35b56",
-      storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
-      messagingSenderId: "1053273947422",
-      appId: "1:1053273947422:web:7560d276444ce91c109d0f",
-      measurementId: "G-4TYSZTTMS1"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+  }
+
+  // Tải bài viết khi mở trang
+  window.onload = () => {
+    loadArticles();
+  };
 </script>
 
 </body>
-
 </html>
-
-
-
