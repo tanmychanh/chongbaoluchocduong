@@ -2,13 +2,12 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Tin tức - Phòng, chống tội phạm trong trường học</title>
+  <title>Trò chơi - Nói không với bạo lực học đường</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
-    header { background-color: #c0392b; color: white; padding: 30px; text-align: center; }
-    header h1 { margin: 0; font-size: 32px; }
-    header p { margin-top: 10px; font-size: 18px; }
+    header { background-color: #c0392b; color: white; text-align: center; padding: 30px 20px; }
+    header h1 { color: white !important; }
 
     .nav {
       background-color: #c62828;
@@ -26,47 +25,63 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: #fff; margin: 0 15px; text-decoration: none;
-      font-weight: bold; transition: color 0.3s ease;
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
     }
     .nav a:hover { color: #ff5252; }
 
     .user-logo {
-      width: 35px; height: 35px; border-radius: 50%;
-      background: #ff5252; color: #fff; text-align: center;
-      line-height: 35px; font-size: 18px; font-weight: bold;
-      cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #ff5252;
+      color: #fff;
+      text-align: center;
+      line-height: 35px;
+      font-size: 18px;
+      font-weight: bold;
       position: absolute; right: 20px; /* logo nằm bên phải */
     }
-    .user-logo:hover { background-color: #c62828; transform: scale(1.1); }
 
-    .logo-menu {
-      display: none; position: absolute; top: 55px; right: 20px;
-      background: #fff; border: 1px solid #ccc; border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 160px; z-index: 1000;
+    .container {
+      background-color: #fff;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+      text-align: center;
     }
-    .logo-menu a { display: block; padding: 10px; text-decoration: none; color: #333; font-size: 14px; }
-    .logo-menu a:hover { background: #fbe9e7; color: #c62828; }
-
-    .content { max-width: 960px; margin: 40px auto; padding: 0 20px; }
-    h2 { color: #c0392b; margin-top: 40px; transition: color 0.3s ease; }
-    h2:hover { color: #e74c3c; }
-    p { font-size: 18px; line-height: 1.6; }
-    img {
-      transition: transform 0.3s ease;
-      width: 100%; max-width: 915px; height: auto;
-      border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-top: 20px;
+    h1 { color: #c0392b; font-size: 26px; margin-bottom: 20px; }
+    .question { font-size: 20px; font-weight: bold; margin-bottom: 20px; color: #34495e; }
+    .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .answers button {
+      background-color: #c0392b; color: white; border: none; border-radius: 10px;
+      font-size: 16px; cursor: pointer; transition: transform 0.2s ease, background-color 0.3s ease;
+      height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 10px;
     }
-    img:hover { transform: scale(1.02); }
-    footer { background-color: #c0392b; color: white; text-align: center; padding: 20px; margin-top: 60px; }
+    .answers button:hover { background-color: #a93226; transform: scale(1.05); }
+    #result { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+    .next-btn {
+      background-color: #27ae60; color: white; border: none; border-radius: 10px;
+      padding: 12px 24px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease;
+    }
+    .next-btn:hover { background-color: #1e8449; }
+    .feedback-btn {
+      background-color: #c0392b; color: white; padding: 12px 24px; border: none; border-radius: 6px;
+      font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: background-color 0.3s ease;
+    }
+    .feedback-btn:hover { background-color: #a93226; }
+    footer { background-color: #c0392b; color: white; text-align: center; padding: 20px; margin-top: 40px; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Tin tức giáo dục</h1>
-    <p><strong>Cập nhật thông tin mới nhất mỗi ngày</strong></p>
+    <h1>🎓 Chuyên đề giáo dục</h1>
+    <p>Trò chơi tương tác giáo dục học đường an toàn và thân thiện</p>
   </header>
 
   <!-- Menu -->
@@ -79,22 +94,14 @@
       <a href="gopy.html">Góp ý</a>
     </div>
     <div class="user-logo" id="userLogo"></div>
-    <div class="logo-menu" id="logoMenu">
-      <a href="#" id="profile">👤 Xem thông tin</a>
-      <a href="#" onclick="logout()">🚪 Đăng xuất</a>
-    </div>
   </div>
 
-  <div class="content">
-    <h2>📢 Hoạt động tuyên truyền tại Trường THCS Tân Mỹ Chánh</h2>
-    <img src="img/bộ giáo dục.jpg" alt="Cơ quan ban hành">
-    <p>
-      Vừa qua, tại Trường THCS Tân Mỹ Chánh, lực lượng công an đã phối hợp cùng nhà trường tổ chức buổi tuyên truyền về <strong>phòng chống bạo lực học đường</strong>. 
-      Buổi tuyên truyền nhằm nâng cao nhận thức cho học sinh, giáo viên và phụ huynh về tác hại của bạo lực học đường, đồng thời đưa ra các biện pháp phòng ngừa và xử lý kịp thời.
-    </p>
-    <p>
-      Đây là hoạt động thiết thực, góp phần xây dựng môi trường học tập <strong>an toàn, thân thiện và lành mạnh</strong>.
-    </p>
+  <div class="container">
+    <h1>🎮 Hành động vì học đường an toàn</h1>
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <div id="result"></div>
+    <button class="next-btn" onclick="nextQuestion()">👉 Câu hỏi tiếp theo</button>
   </div>
 
   <footer>
@@ -102,8 +109,65 @@
   </footer>
 
   <script>
-    // Kiểm tra đăng nhập
-    window.onload = function() {
+    const questions = [
+      { question: "Bạo lực học đường gây ảnh hưởng gì?", options: ["Chỉ gây đau thể chất", "Làm học sinh vui vẻ", "Ảnh hưởng thể chất và tinh thần", "Không ảnh hưởng gì"], answer: 2 },
+      { question: "Ai có vai trò ngăn chặn bạo lực học đường?", options: ["Chỉ giáo viên", "Chỉ phụ huynh", "Chỉ học sinh", "Tất cả mọi người"], answer: 3 },
+      { question: "Hành động nào giúp xây dựng môi trường học đường thân thiện?", options: ["Chia sẻ, giúp đỡ bạn bè", "Trêu chọc bạn", "Đánh nhau", "Phớt lờ người khác"], answer: 0 },
+      { question: "Khi bị bắt nạt, học sinh nên làm gì?", options: ["Im lặng", "Báo với người lớn", "Bắt nạt lại", "Bỏ học"], answer: 1 },
+      { question: "Bạo lực học đường có thể xảy ra ở đâu?", options: ["Chỉ trong lớp học", "Chỉ ngoài sân trường", "Trên mạng xã hội và thực tế", "Không xảy ra"], answer: 2 }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("question").innerText = `Câu ${current + 1}: ${q.question}`;
+      const answersDiv = document.getElementById("answers");
+      answersDiv.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(i);
+        answersDiv.appendChild(btn);
+      });
+      document.getElementById("result").innerText = "";
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[current].answer;
+      const result = document.getElementById("result");
+      if (selected === correct) {
+        score++;
+        result.innerText = "🎉 Chính xác! Bạn thật tuyệt!";
+        result.style.color = "#27ae60";
+      } else {
+        result.innerText = "😢 Sai rồi. Hãy thử lại hoặc chuyển câu khác.";
+        result.style.color = "#c0392b";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        document.querySelector(".question").innerText = `🎯 Bạn đã hoàn thành tất cả câu hỏi!`;
+        document.getElementById("answers").innerHTML = "";
+        document.getElementById("result").innerText = `🎓 Tổng điểm của bạn: ${score}/${questions.length}`;
+        document.querySelector(".next-btn").style.display = "none";
+
+        const feedback = document.createElement("div");
+        feedback.innerHTML = `
+          <h2>🎯 Cảm ơn bạn đã tham gia!</h2>
+          <p>Hãy cho tôi một ý kiến đóng góp để tôi hoàn thiện nha!</p>
+          <button class="feedback-btn" onclick="window.location.href='gopy.html'">Góp ý để hoàn thiện</button>
+        `;
+        document.querySelector(".container").appendChild(feedback);
+      }
+    }
+
+        window.onload = function() {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if(currentUser) {
         document.getElementById("userLogo").textContent = currentUser.avatar;
@@ -111,23 +175,21 @@
           alert("👤 Người dùng: " + currentUser.username);
         };
       } else {
-        window.location.href = "login.html"; // quay lại trang đăng nhập/đăng ký
+        window.location.href = "login.html";
       }
     };
 
-    // Toggle menu khi click logo
     document.getElementById("userLogo").addEventListener("click", function() {
       const menu = document.getElementById("logoMenu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
     });
 
-    // Đăng xuất
     function logout() {
       localStorage.removeItem("currentUser");
       window.location.href = "login.html";
     }
+      loadQuestion();
+    };
   </script>
-
 </body>
 </html>
-
