@@ -18,34 +18,12 @@
     .add-news {margin-top:30px;display:none;}
     .add-news input, .add-news textarea {width:100%;padding:10px;margin-bottom:15px;
       border:1px solid #ccc;border-radius:6px;font-size:16px;}
-    .custom-file {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 15px;
-    }
-    .custom-file input[type="file"] {
-      display: none; /* Ẩn input gốc */
-    }
-    .custom-file label {
-      display: block;
-      background-color: #c0392b;
-      color: white;
-      padding: 12px;
-      border-radius: 6px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .custom-file label:hover {
-      background-color: #e74c3c;
-    }
-    .file-name {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #555;
-      text-align: center;
-    }
+    .custom-file {position: relative;display: inline-block;width: 100%;margin-bottom: 15px;}
+    .custom-file input[type="file"] {display: none;}
+    .custom-file label {display: block;background-color: #c0392b;color: white;padding: 12px;
+      border-radius: 6px;text-align: center;cursor: pointer;font-size: 16px;}
+    .custom-file label:hover {background-color: #e74c3c;}
+    .file-name {margin-top: 8px;font-size: 14px;color: #555;text-align: center;}
     .add-news button {background:#c0392b;color:white;border:none;padding:12px 20px;
       border-radius:6px;cursor:pointer;font-size:16px;}
     .add-news button:hover {background:#e74c3c;}
@@ -89,7 +67,7 @@
         <input type="text" name="title" placeholder="Tiêu đề bài viết" required>
         <textarea name="content" rows="5" placeholder="Nội dung bài viết" required></textarea>
         
-        <!-- Ô chọn ảnh đẹp -->
+        <!-- Ô chọn ảnh -->
         <div class="custom-file">
           <input type="file" id="imageInput" name="image" accept="image/*">
           <label for="imageInput">📷 Chọn hình ảnh</label>
@@ -105,7 +83,29 @@
     &copy; 2025 Trường Tân Mỹ Chánh. Chung tay vì học đường an toàn.
   </footer>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } 
+      from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } 
+      from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
+      authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
+      projectId: "phongchongbaoluchocduong-35b56",
+      storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
+      messagingSenderId: "1053273947422",
+      appId: "1:1053273947422:web:7560d276444ce91c109d0f",
+      measurementId: "G-4TYSZTTMS1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
     const form = document.getElementById('newsForm');
     const articlesDiv = document.getElementById('articles');
     const addNewsForm = document.getElementById('addNewsForm');
@@ -127,49 +127,55 @@
       fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : "Chưa chọn ảnh";
     });
 
-    form.addEventListener('submit', (e) => {
+    // Lưu bài viết vào Firestore
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const title = form.title.value;
       const content = form.content.value;
       const imageFile = fileInput.files[0];
 
-      const article = document.createElement('div');
-      article.classList.add('article');
-      article.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
-
+      let imageUrl = "";
       if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          article.appendChild(img);
-        };
-        reader.readAsDataURL(imageFile);
+        const storageRef = ref(storage, 'images/' + imageFile.name);
+        await uploadBytes(storageRef, imageFile);
+        imageUrl = await getDownloadURL(storageRef);
       }
 
-      articlesDiv.prepend(article);
+      await addDoc(collection(db, "articles"), {
+        title: title,
+        content: content,
+        image: imageUrl,
+        createdAt: new Date()
+      });
+
+      alert("Đăng bài thành công!");
       form.reset();
       fileName.textContent = "Chưa chọn ảnh";
+      loadArticles();
     });
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-     const firebaseConfig = {
-      apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
-      authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
-      projectId: "phongchongbaoluchocduong-35b56",
-      storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
-      messagingSenderId: "1053273947422",
-      appId: "1:1053273947422:web:7560d276444ce91c109d0f",
-      measurementId: "G-4TYSZTTMS1"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
 
+    // Hiển thị bài viết từ Firestore
+    async function loadArticles() {
+      articlesDiv.innerHTML = "";
+      const q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const article = document.createElement('div');
+        article.classList.add('article');
+        article.innerHTML = `<h3>${data.title}</h3><p>${data.content}</p>`;
+        if (data.image) {
+          const img = document.createElement('img');
+          img.src = data.image;
+          article.appendChild(img);
+        }
+        articlesDiv.appendChild(article);
+      });
+    }
+
+    // Load khi mở trang
+    loadArticles();
+  </script>
 
 </body>
 </html>
-
-
-
-
