@@ -3,62 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <title>Trang chủ - Nói không với bạo lực học đường</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Quan trọng cho mobile -->
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
     header {
       background: linear-gradient(to right, #c0392b, #e74c3c);
-      color: white; padding: 40px 20px; text-align: center;
+      color: white; padding: 30px 15px; text-align: center;
     }
+    header h1 { margin: 0; font-size: 24px; }
+    header p { margin-top: 8px; font-size: 14px; }
+
     .nav {
       background-color: #c62828;
-      padding: 12px;
+      padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
     }
     .nav a {
-      color: #fff; margin: 0 15px; text-decoration: none;
-      font-weight: bold; font-size: 16px; transition: color 0.3s ease;
+      color: #fff; margin: 5px; text-decoration: none;
+      font-weight: bold; font-size: 14px; transition: color 0.3s ease;
     }
     .nav a:hover { color: #ff5252; }
+
     .user-logo {
-      width: 35px; height: 35px; border-radius: 50%;
+      width: 30px; height: 30px; border-radius: 50%;
       background: #ff5252; color: #fff; text-align: center;
-      line-height: 35px; font-size: 18px; font-weight: bold;
+      line-height: 30px; font-size: 16px; font-weight: bold;
       cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;
       position: relative;
     }
     .user-logo:hover { background-color: #c62828; transform: scale(1.1); }
+
     .logo-menu {
-      display: none; position: absolute; top: 55px; right: 20px;
+      display: none; position: absolute; top: 45px; right: 10px;
       background: #fff; border: 1px solid #ccc; border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 160px; z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 140px; z-index: 1000;
     }
-    .logo-menu a {
-      display: block; padding: 10px; text-decoration: none;
-      color: #333; font-size: 14px;
-    }
+    .logo-menu a { display: block; padding: 8px; text-decoration: none; color: #333; font-size: 14px; }
     .logo-menu a:hover { background: #fbe9e7; color: #c62828; }
-    .main { padding: 50px 20px; text-align: center; }
-    .main h2 { color: #c0392b; font-size: 28px; margin-bottom: 20px; }
-    .main p { font-size: 18px; color: #555; max-width: 800px; margin: auto; line-height: 1.6; }
+
+    .main { padding: 30px 15px; text-align: center; }
+    .main h2 { color: #c0392b; font-size: 20px; margin-bottom: 15px; }
+    .main p { font-size: 14px; color: #555; max-width: 800px; margin: auto; line-height: 1.6; }
     .main img {
-      margin-top: 30px; max-width: 90%; height: auto;
+      margin-top: 20px; width: 100%; max-width: 600px; height: auto;
       border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.2);
       transition: transform 0.3s ease;
     }
     .main img:hover { transform: scale(1.03); }
     .cta-button {
-      display: inline-block; margin-top: 30px; background-color: #c0392b;
-      color: white; padding: 12px 24px; border-radius: 6px;
-      font-size: 16px; text-decoration: none; transition: background-color 0.3s ease;
+      display: inline-block; margin-top: 20px; background-color: #c0392b;
+      color: white; padding: 10px 20px; border-radius: 6px;
+      font-size: 14px; text-decoration: none; transition: background-color 0.3s ease;
     }
     .cta-button:hover { background-color: #e74c3c; }
-    footer { background-color: #c0392b; color: white; text-align: center; padding: 20px; margin-top: 60px; font-size: 16px; }
+
+    footer { background-color: #c0392b; color: white; text-align: center; padding: 15px; margin-top: 30px; font-size: 12px; }
+
+    /* Responsive cho màn hình nhỏ */
+    @media (max-width: 600px) {
+      header h1 { font-size: 20px; }
+      header p { font-size: 12px; }
+      .main h2 { font-size: 18px; }
+      .main p { font-size: 13px; }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .nav a { font-size: 13px; margin: 3px 0; }
+    }
   </style>
 </head>
 <body>
