@@ -2,173 +2,129 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Tin tức</title>
+  <title>Chuyên đề: Phòng, chống tội phạm trong trường học</title>
   <style>
-    body {margin:0;font-family:'Segoe UI',sans-serif;background:#f9f9f9;color:#333;}
-    header {background:#c0392b;color:white;text-align:center;padding:30px 20px;}
-    nav {background:#fff;padding:10px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-    nav a {margin:0 15px;text-decoration:none;color:#c0392b;font-weight:bold;}
-    .news-container {max-width:800px;margin:40px auto;padding:20px;background:#fff;
-                     border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);}
-    .news-container h2 {color:#c0392b;text-align:center;margin-bottom:20px;}
-    .article {border-bottom:1px solid #ddd;padding:15px 0;}
-    .article h3 {margin:0;color:#c0392b;}
-    .article p {margin:5px 0;line-height:1.6;}
-    .article img {max-width:100%;margin-top:10px;border-radius:8px;}
-    .add-news {margin-top:30px;display:none;}
-    .add-news input, .add-news textarea {width:100%;padding:10px;margin-bottom:15px;
-      border:1px solid #ccc;border-radius:6px;font-size:16px;}
-    .custom-file {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 15px;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
     }
-    .custom-file input[type="file"] {
-      display: none; /* Ẩn input gốc */
-    }
-    .custom-file label {
-      display: block;
+    header {
       background-color: #c0392b;
       color: white;
-      padding: 12px;
-      border-radius: 6px;
+      padding: 30px;
       text-align: center;
-      cursor: pointer;
-      font-size: 16px;
     }
-    .custom-file label:hover {
+    nav {
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #c0392b;
+      font-weight: bold;
+    }
+    .content {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      color: #c0392b;
+      margin-top: 40px;
+      transition: color 0.3s ease;
+    }
+    h2:hover {
+      color: #e74c3c;
+    }
+    p, ul {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    img {
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 915px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    img:hover {
+      transform: scale(1.02);
+    }
+    button {
+      background-color: #c0392b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    footer {
+      background-color: #c0392b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #c0392b;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #fdf2f2;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #c0392b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
       background-color: #e74c3c;
     }
-    .file-name {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #555;
-      text-align: center;
-    }
-    .add-news button {background:#c0392b;color:white;border:none;padding:12px 20px;
-      border-radius:6px;cursor:pointer;font-size:16px;}
-    .add-news button:hover {background:#e74c3c;}
-    footer {background:#c0392b;color:white;text-align:center;padding:20px;margin-top:40px;}
-    .login-box {text-align:center;margin-bottom:20px;}
-    .login-box input {padding:8px;border:1px solid #ccc;border-radius:6px;}
-    .login-box button {padding:8px 15px;background:#c0392b;color:white;border:none;
-      border-radius:6px;cursor:pointer;}
   </style>
 </head>
 <body>
 
   <header>
-    <h1>🎓 Chuyên đề giáo dục</h1>
-    <p>Trang tin tức học đường an toàn và thân thiện</p>
+    <h1>Chuyên đề giáo dục</h1>
+    <p><strong>Tin mới cho bạn mỗi ngày</strong></p>
   </header>
 
   <nav>
-    <a href="index.html">Trang chủ</a>
     <a href="news.html">Tin tức</a>
+    <a href="index.html">Trang chủ</a>
     <a href="gt.html">Thông tin</a>
     <a href="trochoi.html">Trò chơi</a>
     <a href="gopy.html">Góp ý</a>
   </nav>
-
-  <div class="news-container">
-    <h2>📰 Tin tức mới nhất</h2>
-
-    <div id="articles"></div>
-
-    <!-- Đăng nhập admin -->
-    <div class="login-box">
-      <input type="password" id="adminPass" placeholder="Nhập mật khẩu admin">
-      <button onclick="checkAdmin()">Đăng nhập</button>
-    </div>
-
-    <!-- Form thêm bài viết -->
-    <div class="add-news" id="addNewsForm">
-      <h2>✍️ Đăng bài mới</h2>
-      <form id="newsForm">
-        <input type="text" name="title" placeholder="Tiêu đề bài viết" required>
-        <textarea name="content" rows="5" placeholder="Nội dung bài viết" required></textarea>
-        
-        <!-- Ô chọn ảnh đẹp -->
-        <div class="custom-file">
-          <input type="file" id="imageInput" name="image" accept="image/*">
-          <label for="imageInput">📷 Chọn hình ảnh</label>
-          <div class="file-name" id="fileName">Chưa chọn ảnh</div>
-        </div>
-
-        <button type="submit">Đăng bài</button>
-      </form>
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 Trường Tân Mỹ Chánh. Chung tay vì học đường an toàn.
-  </footer>
-
-  <script>
-    const form = document.getElementById('newsForm');
-    const articlesDiv = document.getElementById('articles');
-    const addNewsForm = document.getElementById('addNewsForm');
-    const fileInput = document.getElementById('imageInput');
-    const fileName = document.getElementById('fileName');
-
-    function checkAdmin() {
-      const pass = document.getElementById('adminPass').value;
-      if (pass === "15022011") {
-        addNewsForm.style.display = "block";
-        document.querySelector('.login-box').style.display = "none";
-      } else {
-        alert("Sai mật khẩu!");
-      }
-    }
-
-    // Hiển thị tên file ảnh
-    fileInput.addEventListener('change', () => {
-      fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : "Chưa chọn ảnh";
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = form.title.value;
-      const content = form.content.value;
-      const imageFile = fileInput.files[0];
-
-      const article = document.createElement('div');
-      article.classList.add('article');
-      article.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
-
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          article.appendChild(img);
-        };
-        reader.readAsDataURL(imageFile);
-      }
-
-      articlesDiv.prepend(article);
-      form.reset();
-      fileName.textContent = "Chưa chọn ảnh";
-    });
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-     const firebaseConfig = {
-      apiKey: "AIzaSyCd_q3iz79Yab5_HVEkhqQg9Ck6dDzi-dQ",
-      authDomain: "phongchongbaoluchocduong-35b56.firebaseapp.com",
-      projectId: "phongchongbaoluchocduong-35b56",
-      storageBucket: "phongchongbaoluchocduong-35b56.firebasestorage.app",
-      messagingSenderId: "1053273947422",
-      appId: "1:1053273947422:web:7560d276444ce91c109d0f",
-      measurementId: "G-4TYSZTTMS1"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-
-
-</body>
-</html>
-
-
-
+  <div class="content">
+    <h2>Vừa qua ở Trường THCS Tân Mỹ Chánh đã có các bộ công an đến để tuyên truyền về phòng chống bạo lực học đường</h2>
+    <img src="img/bộ giáo dục.jpg" alt="Cơ quan ban hành">
+    
