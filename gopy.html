@@ -4,79 +4,58 @@
   <meta charset="UTF-8">
   <title>Hộp thư liên hệ</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
+    header { background-color: #c0392b; color: white; text-align: center; padding: 30px 20px; }
+    header h1, header p { margin: 0; }
+    .nav {
+      background-color: #c62828;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    header {
-      background-color: #c0392b;
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-    }
-    header h1, header p {
-      margin: 0;
-    }
-    nav {
-      background-color: #fff;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    nav a {
+    .nav a {
+      color: #fff;
       margin: 0 15px;
       text-decoration: none;
-      color: #c0392b;
       font-weight: bold;
     }
+    .nav a:hover { color: #ff5252; }
+    .user-logo {
+      width: 35px; height: 35px; border-radius: 50%;
+      background: #ff5252; color: #fff; text-align: center;
+      line-height: 35px; font-size: 18px; font-weight: bold;
+      cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;
+      position: relative;
+    }
+    .user-logo:hover { background-color: #c62828; transform: scale(1.1); }
+    .logo-menu {
+      display: none; position: absolute; top: 55px; right: 20px;
+      background: #fff; border: 1px solid #ccc; border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 160px; z-index: 1000;
+    }
+    .logo-menu a {
+      display: block; padding: 10px; text-decoration: none;
+      color: #333; font-size: 14px;
+    }
+    .logo-menu a:hover { background: #fbe9e7; color: #c62828; }
     .contact-box {
-      background-color: #fff;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      max-width: 500px;
-      text-align: center;
+      background-color: #fff; margin: 40px auto; padding: 30px;
+      border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 500px; text-align: center;
     }
-    .contact-box h2 {
-      margin-bottom: 20px;
-      color: #c0392b;
-    }
-    .contact-box input,
-    .contact-box textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
+    .contact-box h2 { margin-bottom: 20px; color: #c0392b; }
+    .contact-box input, .contact-box textarea {
+      width: 100%; padding: 10px; margin-bottom: 15px;
+      border: 1px solid #ccc; border-radius: 6px; font-size: 16px;
     }
     .contact-box button {
-      background-color: #c0392b;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
+      background-color: #c0392b; color: white; border: none;
+      padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 16px;
     }
-    .contact-box button:hover {
-      background-color: #e74c3c;
-    }
-    #response {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #27ae60;
-    }
-    footer {
-      background-color: #c0392b;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
+    .contact-box button:hover { background-color: #e74c3c; }
+    #response { margin-top: 10px; font-weight: bold; }
+    footer { background-color: #c0392b; color: white; text-align: center; padding: 20px; margin-top: 40px; }
   </style>
 </head>
 <body>
@@ -86,19 +65,25 @@
     <p>Trang chủ tuyên truyền giáo dục học đường an toàn và thân thiện</p>
   </header>
 
-  <nav>
-
-    <a href="index.html">Trang chủ</a>
-    <a href="news.html">Tin tức</a>
-    <a href="gt.html">Thông tin</a>
-    <a href="trochoi.html">Trò chơi</a>
-    <a href="gopy.html">Góp ý</a>
-  </nav>
+  <!-- Menu -->
+  <div class="nav">
+    <div>
+      <a href="index.html">Trang Chủ</a>
+      <a href="news.html">Tin tức</a>
+      <a href="gt.html">Thông tin</a>
+      <a href="trochoi.html">Trò chơi</a>
+      <a href="gopy.html">Góp ý</a>
+    </div>
+    <div class="user-logo" id="userLogo"></div>
+    <div class="logo-menu" id="logoMenu">
+      <a href="#" id="profile">👤 Xem thông tin</a>
+      <a href="#" onclick="logout()">🚪 Đăng xuất</a>
+    </div>
+  </div>
 
   <div class="contact-box">
     <h2>📬 Gửi tin nhắn đến nhà trường</h2>
-    <form method="POST" 
-    action="https://formspree.io/f/xanapvpp">
+    <form id="contactForm">
       <input type="text" name="name" placeholder="Họ và tên" required>
       <input type="email" name="email" placeholder="Email" required>
       <textarea name="message" rows="5" placeholder="Nội dung tin nhắn" required></textarea>
@@ -110,14 +95,63 @@
   <footer>
     &copy; 2025 Trường Tân Mỹ Chánh. Chung tay vì học đường an toàn.
   </footer>
+
+  <script>
+    // Kiểm tra đăng nhập
+    window.onload = function() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(currentUser) {
+        document.getElementById("userLogo").textContent = currentUser.avatar;
+        document.getElementById("profile").onclick = function() {
+          alert("👤 Người dùng: " + currentUser.username);
+        };
+      } else {
+        window.location.href = "login.html";
+      }
+    };
+
+    // Toggle menu khi click logo
+    document.getElementById("userLogo").addEventListener("click", function() {
+      const menu = document.getElementById("logoMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
+
+    // Đăng xuất
+    function logout() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "login.html";
+    }
+
+    // Xử lý form góp ý
+    const form = document.getElementById('contactForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message')
+      };
+
+      try {
+        const res = await fetch('http://localhost:3000/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.text();
+        responseDiv.innerText = result;
+        responseDiv.style.color = '#27ae60';
+        form.reset();
+      } catch (error) {
+        responseDiv.innerText = '❌ Gửi thất bại. Vui lòng thử lại.';
+        responseDiv.style.color = '#c0392b';
+      }
+    });
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
