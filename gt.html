@@ -3,77 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>Thông tin - Phòng, chống tội phạm trong trường học</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Quan trọng cho mobile -->
   <style>
     body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
-    header { background-color: #c0392b; color: white; padding: 30px; text-align: center; }
-    header h1 { margin: 0; font-size: 32px; }
-    header p { margin-top: 10px; font-size: 18px; }
+    header { background-color: #c0392b; color: white; padding: 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 24px; }
+    header p { margin-top: 8px; font-size: 14px; }
+
     .nav {
       background-color: #c62828;
-      padding: 12px;
+      padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
     }
     .nav a {
-      color: #fff; margin: 0 15px; text-decoration: none;
+      color: #fff; margin: 5px; text-decoration: none;
       font-weight: bold; transition: color 0.3s ease;
+      font-size: 14px;
     }
     .nav a:hover { color: #ff5252; }
+
     .user-logo {
-      width: 35px; height: 35px; border-radius: 50%;
+      width: 30px; height: 30px; border-radius: 50%;
       background: #ff5252; color: #fff; text-align: center;
-      line-height: 35px; font-size: 18px; font-weight: bold;
+      line-height: 30px; font-size: 16px; font-weight: bold;
       cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;
       position: relative;
     }
     .user-logo:hover { background-color: #c62828; transform: scale(1.1); }
+
     .logo-menu {
-      display: none; position: absolute; top: 55px; right: 20px;
+      display: none; position: absolute; top: 45px; right: 10px;
       background: #fff; border: 1px solid #ccc; border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 160px; z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2); min-width: 140px; z-index: 1000;
     }
-    .logo-menu a {
-      display: block; padding: 10px; text-decoration: none;
-      color: #333; font-size: 14px;
-    }
+    .logo-menu a { display: block; padding: 8px; text-decoration: none; color: #333; font-size: 14px; }
     .logo-menu a:hover { background: #fbe9e7; color: #c62828; }
-    .content { max-width: 960px; margin: 40px auto; padding: 0 20px; }
-    h2 { color: #c0392b; margin-top: 40px; transition: color 0.3s ease; }
-    h2:hover { color: #e74c3c; }
-    p, ul { font-size: 18px; line-height: 1.6; }
+
+    .content { max-width: 960px; margin: 20px auto; padding: 0 15px; }
+    h2 { color: #c0392b; margin-top: 20px; font-size: 20px; }
+    p, ul { font-size: 16px; line-height: 1.6; }
     ul { padding-left: 20px; }
-    img {
+
+    img, video {
       transition: transform 0.3s ease;
-      width: 100%; max-width: 915px; height: auto;
+      width: 100%; height: auto;
       border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-top: 20px;
+      margin-top: 15px;
     }
     img:hover { transform: scale(1.02); }
+
     button {
-      background-color: #c0392b; color: white; padding: 10px 20px;
+      background-color: #c0392b; color: white; padding: 10px 16px;
       border: none; border-radius: 5px; cursor: pointer;
-      margin-top: 20px; font-size: 16px;
+      margin-top: 15px; font-size: 14px; width: 100%;
     }
     button:hover { background-color: #e74c3c; }
-    footer { background-color: #c0392b; color: white; text-align: center; padding: 20px; margin-top: 60px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 18px; }
-    th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+
+    footer { background-color: #c0392b; color: white; text-align: center; padding: 15px; margin-top: 40px; font-size: 12px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
     th { background-color: #c0392b; color: white; }
     tr:nth-child(even) { background-color: #fdf2f2; }
+
     .cta-button {
-      display: inline-block; margin-top: 20px; background-color: #c0392b;
-      color: white; padding: 12px 24px; border-radius: 6px;
-      font-size: 16px; text-decoration: none; font-weight: bold;
+      display: inline-block; margin-top: 15px; background-color: #c0392b;
+      color: white; padding: 10px 20px; border-radius: 6px;
+      font-size: 14px; text-decoration: none; font-weight: bold;
       transition: background-color 0.3s ease;
     }
     .cta-button:hover { background-color: #e74c3c; }
-    video {
-      display: block; margin: 20px auto; border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    /* Responsive cho màn hình nhỏ */
+    @media (max-width: 600px) {
+      header h1 { font-size: 20px; }
+      header p { font-size: 12px; }
+      h2 { font-size: 18px; }
+      p, ul { font-size: 14px; }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .nav a { font-size: 13px; margin: 3px 0; }
     }
   </style>
 </head>
@@ -101,8 +112,9 @@
   </div>
 
   <div class="content">
+    <!-- Nội dung giữ nguyên như bạn đã viết -->
     <h2>🏛️ Cơ quan ban hành</h2>
-    <video width="900" controls>
+    <video controls>
       <source src="video/bl.mp4" type="video/mp4">
       Trình duyệt của bạn không hỗ trợ video.
     </video>
@@ -110,6 +122,7 @@
       - Ủy ban nhân dân phường Mỹ Phong (Công văn số 1198/UBND-VHXH, ngày 24/9/2025)<br>
       - Sở Giáo dục và Đào tạo tỉnh Đồng Tháp (Công văn số 718/SGDĐT-VP, ngày 17/9/2025)
     </p>
+
 
     <h2>🎯 Mục tiêu chuyên đề</h2>
     <img src="img/anh2.jpg" alt="Mục tiêu chuyên đề">
@@ -178,7 +191,7 @@
           alert("👤 Người dùng: " + currentUser.username);
         };
       } else {
-        window.location.href = "login.html";
+        window.location.href = "auth.html";
       }
     };
 
@@ -191,8 +204,9 @@
     // Đăng xuất
     function logout() {
       localStorage.removeItem("currentUser");
-      window.location.href = "login.html";
+      window.location.href = "auth.html";
     }
   </script>
 </body>
-</html>  
+</html>
+
