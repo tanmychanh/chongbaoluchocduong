@@ -57,7 +57,7 @@
     <!-- Đăng nhập admin -->
     <div class="login-box">
       <input type="password" id="adminPass" placeholder="Nhập mật khẩu admin">
-      <button onclick="checkAdmin()">Đăng nhập</button>
+      <button id="adminLoginBtn" type="button">Đăng nhập</button>
     </div>
 
     <!-- Form thêm bài viết -->
@@ -111,16 +111,18 @@
     const addNewsForm = document.getElementById('addNewsForm');
     const fileInput = document.getElementById('imageInput');
     const fileName = document.getElementById('fileName');
+    const loginBtn = document.getElementById('adminLoginBtn');
 
-    function checkAdmin() {
-      const pass = document.getElementById('adminPass').value;
+    // Đăng nhập admin
+    loginBtn.addEventListener('click', () => {
+      const pass = document.getElementById('adminPass').value.trim();
       if (pass === "15022011") {
         addNewsForm.style.display = "block";
         document.querySelector('.login-box').style.display = "none";
       } else {
         alert("Sai mật khẩu!");
       }
-    }
+    });
 
     // Hiển thị tên file ảnh
     fileInput.addEventListener('change', () => {
@@ -136,14 +138,14 @@
 
       let imageUrl = "";
       if (imageFile) {
-        const storageRef = ref(storage, 'images/' + imageFile.name);
+        const storageRef = ref(storage, 'images/' + Date.now() + '-' + imageFile.name);
         await uploadBytes(storageRef, imageFile);
         imageUrl = await getDownloadURL(storageRef);
       }
 
       await addDoc(collection(db, "articles"), {
-        title: title,
-        content: content,
+        title,
+        content,
         image: imageUrl,
         createdAt: new Date()
       });
@@ -158,8 +160,8 @@
     async function loadArticles() {
       articlesDiv.innerHTML = "";
       const q = query(collection(db, "articles"), orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
+      const snap = await getDocs(q);
+      snap.forEach((doc) => {
         const data = doc.data();
         const article = document.createElement('div');
         article.classList.add('article');
