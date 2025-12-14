@@ -3,26 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Trò chơi - Nói không với bạo lực học đường</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; color: #333; }
     header { background-color: #c0392b; color: white; text-align: center; padding: 30px 20px; }
     header h1 { color: white !important; }
-
     .nav {
       background-color: #c62828;
       padding: 12px;
       display: flex;
-      justify-content: center; /* căn giữa menu */
+      justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-    }
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
     }
     .nav a {
       color: #fff;
@@ -31,7 +24,6 @@
       font-weight: bold;
     }
     .nav a:hover { color: #ff5252; }
-
     .user-logo {
       width: 35px;
       height: 35px;
@@ -42,9 +34,29 @@
       line-height: 35px;
       font-size: 18px;
       font-weight: bold;
-      position: absolute; right: 20px; /* logo nằm bên phải */
+      cursor: pointer;
+      position: relative;
     }
-
+    .logo-menu {
+      display: none;
+      position: absolute;
+      top: 55px;
+      right: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      min-width: 160px;
+      z-index: 1000;
+    }
+    .logo-menu a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+    }
+    .logo-menu a:hover { background: #fbe9e7; color: #c62828; }
     .container {
       background-color: #fff;
       margin: 40px auto;
@@ -86,7 +98,7 @@
 
   <!-- Menu -->
   <div class="nav">
-    <div class="nav-links">
+    <div>
       <a href="index.html">Trang Chủ</a>
       <a href="news.html">Tin tức</a>
       <a href="gt.html">Thông tin</a>
@@ -94,6 +106,10 @@
       <a href="gopy.html">Góp ý</a>
     </div>
     <div class="user-logo" id="userLogo"></div>
+    <div class="logo-menu" id="logoMenu">
+      <a href="#" id="profile">👤 Xem thông tin</a>
+      <a href="#" onclick="logout()">🚪 Đăng xuất</a>
+    </div>
   </div>
 
   <div class="container">
@@ -160,36 +176,52 @@
         const feedback = document.createElement("div");
         feedback.innerHTML = `
           <h2>🎯 Cảm ơn bạn đã tham gia!</h2>
-          <p>Hãy cho tôi một ý kiến đóng góp để tôi hoàn thiện nha!</p>
-          <button class="feedback-btn" onclick="window.location.href='gopy.html'">Góp ý để hoàn thiện</button>
         `;
         document.querySelector(".container").appendChild(feedback);
       }
     }
-
-        window.onload = function() {
+    window.onload = function() {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       if(currentUser) {
         document.getElementById("userLogo").textContent = currentUser.avatar;
-        document.getElementById("profile").onclick = function() {
-          alert("👤 Người dùng: " + currentUser.username);
-        };
+        loadQuestion();
       } else {
-        window.location.href = "login.html";
+        window.location.href = "login.html"; 
       }
-    };
+    }
+  </script>
+  <script>
+  // Kiểm tra đăng nhập
+  window.onload = function() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(currentUser) {
+      // Hiển thị avatar (chữ cái hoặc ký hiệu)
+      document.getElementById("userLogo").textContent = currentUser.avatar;
 
-    document.getElementById("userLogo").addEventListener("click", function() {
-      const menu = document.getElementById("logoMenu");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    });
+      // Khi nhấn "Xem thông tin"
+      document.getElementById("profile").onclick = function() {
+        alert("👤 Người dùng: " + currentUser.username);
+      };
 
-    function logout() {
-      localStorage.removeItem("currentUser");
+      // Load câu hỏi đầu tiên
+      loadQuestion();
+    } else {
       window.location.href = "login.html";
     }
-      loadQuestion();
-    };
-  </script>
+  };
+
+  // Toggle menu khi click logo
+  document.getElementById("userLogo").addEventListener("click", function() {
+    const menu = document.getElementById("logoMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  });
+
+  // Đăng xuất
+  function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+  }
+</script>
+
 </body>
 </html>
