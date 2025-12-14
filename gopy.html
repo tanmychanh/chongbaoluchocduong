@@ -14,13 +14,20 @@
       background-color: #c62828;
       padding: 10px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center; /* căn giữa menu */
       align-items: center;
-      flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     .nav a {
-      color: #fff; margin: 5px; text-decoration: none; font-weight: bold;
-      font-size: 14px;
+      color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold;
+      font-size: 14px; transition: color 0.3s ease;
     }
     .nav a:hover { color: #ff5252; }
 
@@ -29,7 +36,7 @@
       background: #ff5252; color: #fff; text-align: center;
       line-height: 30px; font-size: 16px; font-weight: bold;
       cursor: pointer; transition: transform 0.3s ease, background-color 0.3s ease;
-      position: relative;
+      position: absolute; right: 20px; /* logo nằm bên phải */
     }
     .user-logo:hover { background-color: #c62828; transform: scale(1.1); }
 
@@ -66,7 +73,6 @@
       header h1 { font-size: 20px; }
       header p { font-size: 12px; }
       .contact-box h2 { font-size: 18px; }
-      .nav { flex-direction: column; align-items: flex-start; }
       .nav a { font-size: 13px; margin: 3px 0; }
     }
   </style>
@@ -80,7 +86,7 @@
 
   <!-- Menu -->
   <div class="nav">
-    <div>
+    <div class="nav-links">
       <a href="index.html">Trang Chủ</a>
       <a href="news.html">Tin tức</a>
       <a href="gt.html">Thông tin</a>
@@ -119,7 +125,7 @@
           alert("👤 Người dùng: " + currentUser.username);
         };
       } else {
-        window.location.href = "auth.html";
+        window.location.href = "login.html";
       }
     };
 
@@ -132,7 +138,7 @@
     // Đăng xuất
     function logout() {
       localStorage.removeItem("currentUser");
-      window.location.href = "auth.html";
+      window.location.href = "login.html";
     }
 
     // Xử lý form góp ý gửi qua Formspree
